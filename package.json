@@ -1,0 +1,10 @@
+{
+  "name": "planning-poker",
+  "version": "0.0.1",
+  "description": "scrum planning poker app",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^1.7.3",
+    "amqplib": "^0.5.1"
+  }
+}
