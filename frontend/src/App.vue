@@ -1,7 +1,6 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <h1></h1>
+  <div id="app" class="app" uk-grid>
+    <h1>Planning Poker</h1>
     <router-view></router-view>
   </div>
 </template>
@@ -18,30 +17,21 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import "../scss/uikit";
 
-h1, h2 {
-  font-weight: normal;
-}
+  .app {
+    margin: 0 auto;
+    width: calc(100% - 20px);
+    max-width: 800px;
+    padding: 10px;
+    color: #333;
+  }
+  .card {
+    margin-bottom: 20px;
+  }
+  .user-voter {
+    flex-basis: 200px;
+  }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>

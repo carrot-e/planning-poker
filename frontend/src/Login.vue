@@ -1,12 +1,16 @@
 <template>
-    <div id="login">
-        <div class="deck-container">
-            <label>
-                Your name is:
-                <input type="text" autofocus v-model="userName">
-            </label>
-            <a @click.prevent="login">Done</a>
-        </div>
+    <div id="login" uk-grid>
+        <form class="uk-form-stacked">
+            <div class="uk-margin">
+                <label class="uk-form-label" for="login-input">Your name is:</label>
+                <div class="uk-form-controls">
+                    <input autofocus v-model="userName" class="uk-input" id="login-input" type="text">
+                </div>
+            </div>
+            <div class="uk-margin">
+                <a @click.prevent="login" class="uk-button uk-button-primary">Done</a>
+            </div>
+        </form>
     </div>
 </template>
 

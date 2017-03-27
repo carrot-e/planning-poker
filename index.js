@@ -66,7 +66,7 @@ io.on('connection', function(socket) {
     });
 
     socket.on(clientVote, function(data) {
-        var prepared = {task: data.task, clientId: socket.id, card: data.card};
+        var prepared = {task: data.task, clientId: socket.id, card: data.card, description: data.descirption};
         votes.push(prepared);
         io.to(boardId).emit(clientVote, prepared); // emit the vote to board
     });
@@ -76,6 +76,10 @@ io.on('connection', function(socket) {
             votes: votes,
             clients: clients
         })));
+        boardId = null;
+        clients = [];
+        tasks = [];
+        votes = [];
     });
 });
 
