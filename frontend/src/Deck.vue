@@ -3,7 +3,7 @@
         <div class="deck-container" v-if="userName">
             You logged in as {{ userName }}
         </div>
-        <div class="deck-container" v-show="!isShowDeck && !selectedCard.name">
+        <div class="deck-container" v-show="!isShowDeck && !selectedCard.name && !sessionStatistics.length">
             Waiting for task...
         </div>
         <div class="deck-container" v-show="isShowDeck">
@@ -15,12 +15,16 @@
         <div class="deck-container" v-show="!isShowDeck && selectedCard.name">
             <div class>Your SP estimate is: {{ selectedCard.name }}</div>
         </div>
+        <div class="deck-container" v-if="sessionStatistics.length">
+            <div class="">Your session statistics:</div>
+            <div v-for="data in sessionStatistics">
+                {{ data.task }} : {{ data.card }}
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-    var socket = io('http://localhost:4001');
-
     export default {
         name: 'deck',
         data() {
@@ -37,13 +41,15 @@
                     {name: 'L', description: 'up to 10 days'},
                     {name: 'XL', description: 'more than 10 days'},
                     {name: '∞', description: '...'},
-                ]
+                ],
+                sessionStatistics: []
             }
         },
         methods: {
             vote(card) {
                 socket.emit('client-vote', {
-                    card: card.name
+                    card: card.name,
+                    task: this.taskName
                 });
                 this.isShowDeck = false;
                 this.selectedCard = card;
@@ -51,22 +57,23 @@
         },
         created() {
             var that = this;
-            socket.on('start-task', function(msg) {
-                console.log(msg);
+            socket.on('start-task', function(data) {
+                console.log(data);
                 that.isShowDeck = true;
                 that.selectedCard = {};
-                that.taskName = ''; // TODO
+                that.taskName = data.taskName;
             });
 
-            socket.on('client-login', function(msg) {
-                console.log(msg);
-                that.userName = ''; // TODO
+            socket.on('client-login', function(data) {
+                that.userName = data.userName; // TODO
             });
 
-//            socket.on('stop-task', function(msg) {
-//                console.log(msg);
-//                that.isShowDeck = true;
-//            });
+            socket.on('task-statistics', function(data) {
+                console.log(data);
+                that.selectedCard = {};
+                that.sessionStatistics = data;
+                that.isShowDeck = false;
+            });
         }
     }
 </script>

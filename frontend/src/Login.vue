@@ -11,8 +11,6 @@
 </template>
 
 <script>
-    var socket = io('http://localhost:4001');
-
     export default {
         name: 'login',
         data() {
